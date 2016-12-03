@@ -29,8 +29,6 @@ TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 
 TARGET_SPECIFIC_HEADER_PATH := device/asus/ctp-common/include
 
-TARGET_DROIDBOOT_LIBS := libintel_droidboot
-
 # Adb
 BOARD_FUNCTIONFS_HAS_SS_COUNT := true
 
@@ -45,9 +43,6 @@ TARGET_USES_64_BIT_BINDER := true
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/asus/ctp-common/bluetooth
-
-# bootstub as 2nd bootloader
-TARGET_BOOTLOADER_IS_2ND := true
 
 # Camera
 INTEL_USE_CAMERA_UVC := true
@@ -214,4 +209,4 @@ WIFI_DRIVER_FW_PATH_STA     := "/system/etc/firmware/fw_bcmdhd_43362.bin"
 WIFI_DRIVER_MODULE_ARG      := "iface_name=wlan0 firmware_path=/system/etc/firmware/fw_bcmdhd_43362.bin"
 
 # Use the non-open-source parts, if they're present
--include vendor/asus/ctp-common/BoardConfigVendor.mk
+#-include vendor/asus/ctp-common/BoardConfigVendor.mk
