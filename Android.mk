@@ -25,5 +25,7 @@ ifneq ($(filter T00F,$(TARGET_DEVICE)),)
 LOCAL_PATH := $(call my-dir)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))
+ # Hack for build - because the kernel build is disabled
+    $(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
 
 endif
