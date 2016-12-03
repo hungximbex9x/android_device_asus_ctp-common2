@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ifeq ($(TARGET_POWERHAL_VARIANT),mofd_v1)
 
 LOCAL_PATH := $(call my-dir)
 
@@ -24,7 +23,7 @@ LOCAL_CFLAGS += -Werror
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
 LOCAL_SHARED_LIBRARIES := liblog libcutils libutils
 LOCAL_SRC_FILES := power.cpp
-LOCAL_MODULE := power.mofd_v1
+LOCAL_MODULE := power.redhookbay
 
 ifneq ($(TARGET_TAP_TO_WAKE_NODE),)
 LOCAL_CFLAGS += -DTAP_TO_WAKE_NODE=\"$(TARGET_TAP_TO_WAKE_NODE)\"
@@ -33,4 +32,3 @@ endif
 LOCAL_MODULE_TAGS := optional
 include $(BUILD_SHARED_LIBRARY)
 
-endif # TARGET_POWERHAL_VARIANT == mofd_v1

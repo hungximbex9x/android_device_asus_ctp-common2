@@ -15,19 +15,19 @@
 #
 
 TARGET_ARCH := x86
-TARGET_ARCH_VARIANT := silvermont
+TARGET_ARCH_VARIANT := atom
 TARGET_CPU_ABI := x86
 TARGET_CPU_ABI2 := armeabi-v7a
 TARGET_CPU_ABI_LIST := x86,armeabi-v7a,armeabi
 TARGET_CPU_ABI_LIST_32_BIT := x86,armeabi-v7a,armeabi
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := x86_64-linux-android-
-TARGET_BOARD_PLATFORM := moorefield
-TARGET_BOOTLOADER_BOARD_NAME := moorefield
+TARGET_BOARD_PLATFORM := clovertrail
+TARGET_BOOTLOADER_BOARD_NAME := clovertrail
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 
-TARGET_SPECIFIC_HEADER_PATH := device/asus/mofd-common/include
+TARGET_SPECIFIC_HEADER_PATH := device/asus/ctp-common/include
 
 TARGET_DROIDBOOT_LIBS := libintel_droidboot
 
@@ -44,7 +44,7 @@ TARGET_USES_64_BIT_BINDER := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/asus/mofd-common/bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/asus/ctp-common/bluetooth
 
 # bootstub as 2nd bootloader
 TARGET_BOOTLOADER_IS_2ND := true
@@ -74,10 +74,10 @@ ifeq ($(HOST_OS),linux)
 endif
 
 # Hardware
-BOARD_HARDWARE_CLASS := device/asus/mofd-common/cmhw
+BOARD_HARDWARE_CLASS := device/asus/ctp-common/cmhw
 
 # Healthd
-BOARD_HAL_STATIC_LIBRARIES := libhealthd.moorefield
+BOARD_HAL_STATIC_LIBRARIES := libhealthd.clovertrail
 
 # Houdini: enable ARM codegen for x86
 BUILD_ARM_FOR_X86 := true
@@ -86,16 +86,18 @@ BUILD_ARM_FOR_X86 := true
 BOARD_GFX_REV := RGX6400
 ENABLE_IMG_GRAPHICS := true
 ENABLE_MRFL_GRAPHICS := true
-INTEL_HWC_MOOREFIELD := true
 BOARD_GLOBAL_CFLAGS += -DASUS_ZENFONE2_LP_BLOBS
 HWUI_IMG_FBO_CACHE_OPTIM := true
 TARGET_INTEL_HWCOMPOSER_FORCE_ONLY_ONE_RGB_LAYER := true
+
+#MDS
+USE_MDS_LEGACY := true
 
 # IMG Graphics: System's VSYNC phase offsets in nanoseconds
 VSYNC_EVENT_PHASE_OFFSET_NS := 7500000
 SF_VSYNC_EVENT_PHASE_OFFSET_NS := 5000000
 
-BOARD_EGL_CFG := device/asus/mofd-common/configs/egl.cfg
+BOARD_EGL_CFG := device/asus/ctp-common/configs/egl.cfg
 
 ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.opengles.version = 196608
@@ -117,15 +119,18 @@ USE_OPENGL_RENDERER := true
 TARGET_REQUIRES_SYNCHRONOUS_SETSURFACE := true
 
 # Init
-TARGET_INIT_VENDOR_LIB := libinit_mofd
-TARGET_LIBINIT_DEFINES_FILE := device/asus/mofd-common/init/init_mofd.cpp
+TARGET_INIT_VENDOR_LIB := libinit_ctp
+TARGET_LIBINIT_DEFINES_FILE := device/asus/ctp-common/init/init_ctp.cpp
 TARGET_INIT_UMOUNT_AND_FSCK_IS_UNSAFE := true
 
 # Inline kernel building
-TARGET_KERNEL_SOURCE := kernel/asus/moorefield
+TARGET_KERNEL_SOURCE := kernel/asus/T00F
 TARGET_KERNEL_ARCH := x86_64
 BOARD_KERNEL_IMAGE_NAME := bzImage
-TARGET_KERNEL_CONFIG := cyanogenmod_zenfone2_defconfig
+TARGET_KERNEL_CONFIG := cyanogenmod_T00F_defconfig
+
+#Prebuilt bzImage (needed for otapackage)
+TARGET_PREBUILT_KERNEL:=device/asus/ctp-common/kernel
 
 # Kernel cmdline
 BOARD_KERNEL_CMDLINE := init=/init pci=noearly console=logk0 loglevel=0 vmalloc=256M androidboot.hardware=mofd_v1 watchdog.watchdog_thresh=60 androidboot.spid=xxxx:xxxx:xxxx:xxxx:xxxx:xxxx androidboot.serialno=01234567890123456789 gpt snd_pcm.maximum_substreams=8 ptrace.ptrace_can_access=1 panic=15 ip=50.0.0.2:50.0.0.1::255.255.255.0::usb0:on debug_locks=0 n_gsm.mux_base_conf=\"ttyACM0,0 ttyXMM0,1\" bootboost=1'
@@ -151,7 +156,7 @@ USE_MEDIASDK := true
 MFX_IPP := p8
 
 # Mkbootimg
-BOARD_CUSTOM_BOOTIMG_MK := device/asus/mofd-common/mkbootimg.mk
+#BOARD_CUSTOM_BOOTIMG_MK := device/asus/mofd-common/mkbootimg.mk
 
 # Video Post Processing
 TARGET_HAS_ISV := true
@@ -162,15 +167,12 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 BOARD_GLOBAL_CFLAGS += -DGFX_BUF_EXT
 
 # Partitions
-BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2415919104
-BOARD_FLASH_BLOCK_SIZE := 2048
 BOARD_BOOTIMAGE_PARTITION_SIZE := 16777216
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 1677721600
-BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1363148800
+BOARD_FLASH_BLOCK_SIZE := 131072
 
 # PowerHAL
-TARGET_POWERHAL_VARIANT := mofd_v1
+TARGET_POWERHAL_VARIANT := ctp_v1
 
 # Radio
 BOARD_PROVIDES_LIBRIL := true
@@ -178,19 +180,19 @@ BOARD_PROVIDES_LIBRIL := true
 # Recovery
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 BOARD_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
-TARGET_RECOVERY_FSTAB := device/asus/mofd-common/rootdir/etc/fstab.mofd_v1
-TARGET_RECOVERY_DEVICE_MODULES := libinit_mofd librecovery_updater_mofd intel_prop thermald
+TARGET_RECOVERY_FSTAB := device/asus/ctp-common/ota.fstab
+#TARGET_RECOVERY_DEVICE_MODULES := libinit_mofd librecovery_updater_mofd intel_prop thermald
 TARGET_RECOVERY_DENSITY := hdpi
 
 # Release tools
-TARGET_RELEASETOOLS_EXTENSIONS := device/asus/mofd-common/releasetools
+#TARGET_RELEASETOOLS_EXTENSIONS := device/asus/mofd-common/releasetools
 
 # Security
 BUILD_WITH_SECURITY_FRAMEWORK := chaabi_token
 BUILD_WITH_CHAABI_SUPPORT := true
 
 # SELinux
-BOARD_SEPOLICY_DIRS += device/asus/mofd-common/sepolicy
+BOARD_SEPOLICY_DIRS += device/asus/ctp-common/sepolicy
 
 # Tap-to-Wake
 TARGET_TAP_TO_WAKE_NODE := "/sys/devices/pci0000:00/0000:00:09.2/i2c-7/7-0038/ftsdclickmode"
@@ -203,9 +205,10 @@ WPA_SUPPLICANT_VERSION      := VER_0_8_X
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 BOARD_HOSTAPD_DRIVER        := NL80211
 CONFIG_HS20                 := true
-WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
-WIFI_DRIVER_FW_PATH_AP      := "/system/etc/firmware/fw_bcmdhd_apsta.bin"
-WIFI_DRIVER_FW_PATH_STA     := "/system/etc/firmware/fw_bcmdhd.bin"
+WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcm43362/parameters/firmware_path"
+WIFI_DRIVER_FW_PATH_AP      := "/system/etc/firmware/fw_bcmdhd_43362_apsta.bin"
+WIFI_DRIVER_FW_PATH_STA     := "/system/etc/firmware/fw_bcmdhd_43362.bin"
+WIFI_DRIVER_MODULE_ARG      := "iface_name=wlan0 firmware_path=/system/etc/firmware/fw_bcmdhd_43362.bin"
 
 # Use the non-open-source parts, if they're present
--include vendor/asus/mofd-common/BoardConfigVendor.mk
+-include vendor/asus/ctp-common/BoardConfigVendor.mk
