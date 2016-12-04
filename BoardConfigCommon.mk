@@ -211,5 +211,4 @@ WIFI_DRIVER_FW_PATH_AP      := "/system/etc/firmware/fw_bcmdhd_43362_apsta.bin"
 WIFI_DRIVER_FW_PATH_STA     := "/system/etc/firmware/fw_bcmdhd_43362.bin"
 WIFI_DRIVER_MODULE_ARG      := "iface_name=wlan0 firmware_path=/system/etc/firmware/fw_bcmdhd_43362.bin"
 
-# Use the non-open-source parts, if they're present
-#-include vendor/asus/ctp-common/BoardConfigVendor.mk
+#$(call inherit-product-if-exists, vendor/asus/ctp-common/ctp-common-vendor.mk)
